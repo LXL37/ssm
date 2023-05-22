@@ -20,9 +20,9 @@ public interface RoleService {
 
 	Role getRoleById(int parseInt);
 
-	boolean modify(Role role);
+	int modify(Role role);
 
 	boolean smbmsdeleteroleById(int parseInt);
 
-	boolean add(Role role);
+	int add(Role role);
 }

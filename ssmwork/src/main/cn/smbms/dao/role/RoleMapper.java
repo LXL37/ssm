@@ -20,10 +20,10 @@ public interface RoleMapper {
 	public Role getRoleById(@Param("id") Integer id);
 
 
-	boolean modify(Role role);
+	int modify(Role role);
 
-	boolean add(Role role);
+	int add(Role role);
 
-	boolean deleteRoleById(int parseInt);
+	int deleteRoleById(int parseInt);
 
 }

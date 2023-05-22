@@ -5,7 +5,7 @@
 <div class="right">
     <div class="location">
         <strong>你现在所在的位置是:</strong>
-        <span>供应商管理页面 >> 供应商修改页</span>
+        <span>订单管理页面 >> 订单修改页</span>
     </div>
     <div class="billAdd">
         <form id="billForm" name="billForm" method="post" action="${pageContext.request.contextPath }/sys/bill/modifysave.html" enctype="multipart/form-data">

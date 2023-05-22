@@ -17,9 +17,9 @@ public interface BillService {
 
     Bill getBillById(int parseInt);
 
-    boolean modify(Bill bill);
+    int modify(Bill bill);
 
-    boolean add(Bill bill);
+    int add(Bill bill);
 
     boolean smbmsdeletebillById(int parseInt);
 }

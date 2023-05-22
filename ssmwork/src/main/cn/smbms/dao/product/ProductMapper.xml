@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.smbms.dao.pro.ProductMapper">
+
+    <select id="getProductListAll" resultType="Product">
+        select id, proCode, proName from smbms_product
+    </select>
+    <delete id="deleteProductById" parameterType="Integer">
+        delete from smbms_product where id=#{id}
+    </delete>
+    <insert id="add" parameterType="Product">
+        insert into smbms_product (proCode,proName,proType,proDesc,price)
+        values (#{proCode},#{proName},#{proType},#{proDesc},#{}price)
+    </insert>
+    <update id="modify" parameterType="Product">
+        update smbms_product
+        <trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+            <if test="proCode != null">proCode=#{proCode},</if>
+            <if test="proName != null">proName=#{proName},</if>
+            <if test="productUnit != null">proType=#{proType},</if>
+            <if test="productCount != null">proDesc=#{proDesc},</if>
+            <if test="totalPrice != null">price=#{price},</if>
+        </trim>
+    </update>
+
+    <select id="getProductById" resultType="Product">
+        select * from smbms_product p where p.id=#{id}
+    </select>
+
+
+    <select id="getProductList" resultType="Product">
+        select * from smbms_product p
+        <where>
+            <if test="proName != null and proName != ''">
+                and p.proName like CONCAT ('%',#{proName},'%')
+            </if>
+            <if test="proCode != null and proCode != ''">
+                and p.proCode like CONCAT ('%',#{proCode},'%')
+            </if>
+        </where>
+        order by creationDate DESC limit #{from},#{pageSize}
+    </select>
+<!--    <select id="getProductCountByProviderId" resultType="int">-->
+<!--        select count(1) as proCount from smbms_product where providerId = #{providerId}-->
+<!--    </select>-->
+
+<!--    <delete id="deleteProductByProviderId">-->
+<!--        delete from smbms_product where providerId = #{providerId}-->
+<!--    </delete>-->
+    <select id="getProductCount" resultType="Int">
+        select count(1) as count from smbms_product p
+        <where>
+            <if test="proName != null and proName != ''">
+                and p.proName like CONCAT ('%',#{proName},'%')
+            </if>
+            <if test="proCode != null and proCode != ''">
+                and p.proCode like CONCAT ('%',#{proCode},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

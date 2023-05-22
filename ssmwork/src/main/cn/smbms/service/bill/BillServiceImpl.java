@@ -33,17 +33,22 @@ public class BillServiceImpl implements BillService{
     }
 
     @Override
-    public boolean modify(Bill bill) {
+    public int modify(Bill bill) {
         return billMapper.modify(bill);
     }
 
     @Override
-    public boolean add(Bill bill) {
+    public int add(Bill bill) {
         return billMapper.add(bill);
     }
 
     @Override
     public boolean smbmsdeletebillById(int parseInt) {
-        return billMapper.deleteBillById(parseInt);
+        if (billMapper.deleteBillById(parseInt)>0){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 }

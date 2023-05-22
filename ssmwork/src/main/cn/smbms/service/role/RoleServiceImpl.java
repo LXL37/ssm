@@ -35,17 +35,18 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public boolean modify(Role role) {
+	public int modify(Role role) {
 		return roleMapper.modify(role);
 	}
 
 	@Override
 	public boolean smbmsdeleteroleById(int parseInt) {
-		return roleMapper.deleteRoleById(parseInt);
+
+		return roleMapper.deleteRoleById(parseInt) > 0;
 	}
 
 	@Override
-	public boolean add(Role role) {
+	public int add(Role role) {
 		return roleMapper.add(role);
 	}
 

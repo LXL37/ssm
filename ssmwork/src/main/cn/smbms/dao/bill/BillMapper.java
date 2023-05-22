@@ -30,9 +30,9 @@ public interface BillMapper {
 	public Bill getBillById(@Param("id") Integer id);
 
 
-    boolean modify(Bill bill);
+    int modify(Bill bill);
 
-	boolean add(Bill bill);
+	int add(Bill bill);
 
-	boolean deleteBillById(int parseInt);
+	int  deleteBillById(@Param("id")int parseInt);
 }

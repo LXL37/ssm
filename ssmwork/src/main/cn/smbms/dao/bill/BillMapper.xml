@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.smbms.dao.bill.BillMapper">
+	<delete id="deleteBillById" parameterType="Integer">
+		delete from smbms_bill where id=#{id}
+	</delete>
+	<insert id="add" parameterType="provider">
+		insert into smbms_bill (billCode,productName,productUnit,totalPrice)
+		values (#{billCode},#{productName},#{productUnit},#{totalPrice})
+	</insert>
+	<update id="modify" parameterType="Bill">
+		update smbms_bill
+		<trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+			<if test="billCode != null">billCode=#{billCode},</if>
+			<if test="productName != null">productName=#{productName},</if>
+			<if test="productUnit != null">productUnit=#{productUnit},</if>
+			<if test="productCount != null">productCount=#{productCount},</if>
+			<if test="totalPrice != null">totalPrice=#{totalPrice},</if>
+		</trim>
+	</update>
+
+	<select id="getBillById" resultType="bill">
+		select * from smbms_bill p where p.id=#{id}
+	</select>
+
+
+	<select id="getBillList" resultType="bill">
+		select * from smbms_bill p
+		<where>
+			<if test="productName != null and productName != ''">
+				and p.productName like CONCAT ('%',#{productName},'%')
+			</if>
+			<if test="billCode != null and billCode != ''">
+				and p.billCode like CONCAT ('%',#{billCode},'%')
+			</if>
+		</where>
+		order by creationDate DESC limit #{from},#{pageSize}
+	</select>
+	<select id="getBillCountByProviderId" resultType="int">
+		select count(1) as billCount from smbms_bill where providerId = #{providerId}
+	</select>
+	
+	<delete id="deleteBillByProviderId">
+		delete from smbms_bill where providerId = #{providerId}
+	</delete>
+	<select id="getBillCount" resultType="Int">
+		select count(1) as count from smbms_bill p
+		<where>
+			<if test="productName != null and productName != ''">
+				and p.productName like CONCAT ('%',#{productName},'%')
+			</if>
+			<if test="billCode != null and billCode != ''">
+				and p.billCode like CONCAT ('%',#{billCode},'%')
+			</if>
+		</where>
+	</select>
+</mapper>

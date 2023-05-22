@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.smbms.dao.role.RoleMapper">
+
+	<select id="getRoleListAll" resultType="role">
+		select id, roleCode, roleName from smbms_role
+	</select>
+	<delete id="deleteRoleById" parameterType="Integer">
+		delete from smbms_role where id=#{id}
+	</delete>
+	<insert id="add" parameterType="role">
+		insert into smbms_role (roleCode,roleName,productUnit,totalPrice)
+		values (#{roleCode},#{roleName},#{productUnit},#{totalPrice})
+	</insert>
+	<update id="modify" parameterType="Role">
+		update smbms_role
+		<trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+			<if test="roleCode != null">roleCode=#{roleCode},</if>
+			<if test="roleName != null">roleName=#{roleName},</if>
+			<if test="productUnit != null">productUnit=#{productUnit},</if>
+			<if test="productCount != null">productCount=#{productCount},</if>
+			<if test="totalPrice != null">totalPrice=#{totalPrice},</if>
+		</trim>
+	</update>
+
+	<select id="getRoleById" resultType="role">
+		select * from smbms_role p where p.id=#{id}
+	</select>
+
+
+	<select id="getRoleList" resultType="role">
+		select * from smbms_role p
+		<where>
+			<if test="roleName != null and roleName != ''">
+				and p.roleName like CONCAT ('%',#{roleName},'%')
+			</if>
+			<if test="roleCode != null and roleCode != ''">
+				and p.roleCode like CONCAT ('%',#{roleCode},'%')
+			</if>
+		</where>
+		order by creationDate DESC limit #{from},#{pageSize}
+	</select>
+	<select id="getRoleCountByProviderId" resultType="int">
+		select count(1) as roleCount from smbms_role where providerId = #{providerId}
+	</select>
+
+	<delete id="deleteRoleByProviderId">
+		delete from smbms_role where providerId = #{providerId}
+	</delete>
+	<select id="getRoleCount" resultType="Int">
+		select count(1) as count from smbms_role p
+		<where>
+			<if test="roleName != null and roleName != ''">
+				and p.roleName like CONCAT ('%',#{roleName},'%')
+			</if>
+			<if test="roleCode != null and roleCode != ''">
+				and p.roleCode like CONCAT ('%',#{roleCode},'%')
+			</if>
+		</where>
+	</select>
+</mapper>
